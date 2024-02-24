@@ -1,12 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatButton } from '@angular/material/button'
 
 @Component({
-    selector: 'selector-name',
-    template: ``
+    standalone: true,
+    selector: 'cha-test',
+    template: `
+        this is a test
+        <button mat-raised-button color="primary">si</button>
+    `,
+    imports: [MatButton]
 })
 
-export class NameComponent implements OnInit {
-    constructor() { }
-
-    ngOnInit() { }
+export class ChaTestComponent {
+    title = "Chaviza"
 }
