@@ -1,15 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NxWelcomeComponent } from './nx-welcome.component';
-import { ChaTestComponent } from './test.component';
+import { HdWalletMultiButtonComponent } from '@heavy-duty/wallet-adapter-material';
+import { ShyftApiService } from './shyft-api.service';
+import { WalletStore } from '@heavy-duty/wallet-adapter';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { computedAsync } from 'ngxtension/computed-async';
+
 
 @Component({
   standalone: true,
-  imports: [NxWelcomeComponent, RouterModule, ChaTestComponent],
+  imports: [RouterModule, HdWalletMultiButtonComponent],
   selector: 'agroi-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  template: `
+    <header>
+      <h1>Aló</h1>
+
+      <hd-wallet-multi-button></hd-wallet-multi-button>
+
+      @if(account()){
+        <div>xdddddddd</div>
+      }
+    </header>
+    
+  `,
 })
 export class AppComponent {
-  title = 'agroi';
+  private readonly _shyftApiService = inject(ShyftApiService);
+  private readonly _walletStore = inject(WalletStore);
+  private readonly _publicKey = toSignal(this._walletStore.publicKey$);
+
+  readonly account = computedAsync(() => this._shyftApiService.getAccount(this._publicKey()?.toBase58()),
+    { requireSync: true },
+  );
 }
