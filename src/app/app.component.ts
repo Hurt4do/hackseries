@@ -12,13 +12,14 @@ import { computedAsync } from 'ngxtension/computed-async';
   imports: [RouterModule, HdWalletMultiButtonComponent],
   selector: 'agroi-root',
   template: `
-    <header>
-      <h1>Aló</h1>
-
+    <header class="py-8">
+      <h1>Hola</h1>
+      <div>
       <hd-wallet-multi-button></hd-wallet-multi-button>
-
+      </div>
+      
       @if(account()){
-        <div>xdddddddd</div>
+        <div>Conectada</div>
       }
     </header>
     
